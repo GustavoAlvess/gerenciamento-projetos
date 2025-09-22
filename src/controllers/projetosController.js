@@ -91,6 +91,41 @@ const createProjeto = (req, res) => {
     });
 }
 
+const deleteProjeto = (req, res) => {
+    let id = req.params.id;
+  id = parseInt(id);
+  let resultado = projetos
+
+  if (isNaN(id)) {
+        return res.status(400).json({
+            success: false,
+            message: "ID deve ser um número válido!"
+        });
+    }
+
+    const idParaApagar = parseInt(id);
+    
+  
+    const projetoParaRemover = projetos.find(b => b.id === idParaApagar);
+    if (!projetoParaRemover) {
+        return res.status(404).json({
+            success: false,
+            message: `Projeto com ID ${id} não encontrado para remoção!`
+        });
+    }
+
+  
+    const projetosFiltrados = projetos.filter(bruxo => bruxo.id !== idParaApagar);
+    
+    // Atualizar array global
+    projetos.splice(0, projetos.length, ...projetosFiltrados);
+
+    res.status(200).json({
+        success: true,
+        message: `Projeto ${projetoParaRemover.nome} (ID: ${id}) foi removido dos registros.`,
+        projetoRemovido: projetoParaRemover
+    });
+}
 
 
-export { getAllProjetos,  getProjetosById ,createProjeto,  };
+export { getAllProjetos,  getProjetosById ,createProjeto, deleteProjeto };
