@@ -127,5 +127,62 @@ const deleteProjeto = (req, res) => {
     });
 }
 
+const updateProjeto = (req, res) => {
+  const { id } = req.params;
+  const { nome, status, orcamento, gerente, prazo } = req.body;
 
-export { getAllProjetos,  getProjetosById ,createProjeto, deleteProjeto };
+  // Validar ID
+  if (isNaN(id)) {
+      return res.status(400).json({
+          success: false,
+          message: "ID deve ser um número válido!"
+      });
+  }
+
+  if (orcamento <= 0){
+     return res.status(400).json({
+          success: false,
+          message: "Orçamento deve ser maior que 0!"
+      });
+  }
+  const idParaEditar = parseInt(id);
+  
+  
+  const projetoExiste = projetos.find(b => b.id === idParaEditar);
+  if (!projetoExiste) {
+      return res.status(404).json({
+          success: false,
+          message: `Projeto com ID ${id} não encontrada para atualização!`
+      });
+  }
+
+  // Atualizar barbie usando map
+  const projetosAtualizados = projetos.map(projeto => 
+      projeto.id === idParaEditar 
+          ? { 
+              ...projeto, 
+              ...(nome && { nome }),
+              ...(status && { status }),
+              ...(gerente && { gerente }),
+              ...(prazo && { prazo }),
+              ...(orcamento && { orcamento: parseInt(orcamento) }),
+            
+                }
+          : projeto
+  );
+
+  // Atualizar array global
+  projetos.splice(0, projetos.length, ...projetosAtualizados);
+
+  
+  const projetoAtualizado = projetos.find(b => b.id === idParaEditar);
+
+  res.status(200).json({
+      success: true,
+      message: `Dados do Projeto ID ${id} atualizados com sucesso!`,
+      projeto: projetoAtualizado
+  });
+};
+
+
+export { getAllProjetos,  getProjetosById ,createProjeto, deleteProjeto, updateProjeto };
