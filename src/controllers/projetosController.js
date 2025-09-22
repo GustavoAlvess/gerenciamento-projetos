@@ -39,6 +39,26 @@ const getAllProjetos = (req, res) => {
     data: resultado
   });
 };
- 
+ const getProjetosById = (req, res) => {
+ let id = req.params.id;
+  id = parseInt(id);
+  const projeto = projetos.find((b) => b.id === id);
+
+
+console.log(id);
+console.log(projeto);
+
+
+
+  if (projeto) {
+    res.status(200).json(projeto);
+  } else {
+    res.status(404).json({
+      message: "Nenhum personagem com esse ID",
+    });
+ };
+ }
+
+
 
 export { getAllProjetos,  getProjetosById ,createProjeto, deleteProjeto };
