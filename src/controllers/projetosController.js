@@ -15,15 +15,21 @@ const getAllProjetos = (req, res) => {
        (g) => g.gerente.toLowerCase() === gerente.toLowerCase()
      );
    }
-  //  if (prazo - new Date() === 30) {
-  //    resultado = resultado.filter(
-  //      (p) => p.prazo.toLowerCase() === prazo.toLowerCase()
-  //    );
-  //  }
+    // if (prazo - new Date() === 30) {
+    //   resultado = resultado.filter(
+    //     (p) => p.prazo.toLowerCase() === prazo.toLowerCase()
+    //   );
+    // }
 
-  //  if (orcamento) {
-  //    resultado = resultado.filter((o) => o.orcamento == orcamento);
-  //  }
+    // if (orcamento < 50000 && orcamento > 10000) {
+    //   resultado = resultado.filter((o) => o.orcamento == orcamento);
+    //   return res.send(200).json({
+    //     success: true,
+    //     message: resultado
+    //   })
+    // } else if  ( orcamento < 10000) {
+    //   resultado = resultado.filter((o) => o.orcamento == orcamento);
+    // }
 
    if (nome) {
      resultado = resultado.filter((n) =>
