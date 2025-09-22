@@ -59,6 +59,38 @@ console.log(projeto);
  };
  }
 
+const createProjeto = (req, res) => {
+    const { nome, status, orcamento, gerente, prazo} =
+    req.body;
+
+  // Validação de campos obrigatórios
+  if (!nome || !gerente || prazo ) {
+    return res.status(400).json({
+      success: false,
+      message: "Nome, gerente e prazo são obrigatórios para um novo projeto!",
+    });
+  }
+
+  
+  const novoProjeto = {
+      id: projetos.length + 1,
+      nome, 
+      status,
+      orcamento,
+      gerente,
+      prazo, 
+    };
+    
+    
+    projetos.push(novoProjeto);
+    
+    res.status(201).json({
+        success: true,
+        message: "Novo projeto cadastrado!",
+        data: novoProjeto,
+    });
+}
 
 
-export { getAllProjetos,  getProjetosById ,createProjeto, deleteProjeto };
+
+export { getAllProjetos,  getProjetosById ,createProjeto,  };
